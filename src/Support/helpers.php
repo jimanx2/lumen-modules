@@ -95,3 +95,12 @@ if( !function_exists("config_path") )
         return base_path("config/$path");
     }
 }
+
+if( !function_exists("module_exists") )
+{
+    function module_exists($slug)
+    {
+        $location = config('modules.default_location');
+        return modules($location)->where('slug', $slug)->first() !== NULL;
+    }
+}
