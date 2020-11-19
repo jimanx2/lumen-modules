@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Caffeinated\Modules\RepositoryManager;
 use Symfony\Component\Console\Helper\ProgressBar;
+use Illuminate\Support\Str;
 
 class MakeModuleCommand extends Command
 {
@@ -70,15 +71,15 @@ class MakeModuleCommand extends Command
     {
         $location = $this->option('location');
 
-        $this->container['slug']        = str_slug($this->argument('slug'));
-        $this->container['name']        = studly_case($this->container['slug']);
+        $this->container['slug']        = Str::slug($this->argument('slug'));
+        $this->container['name']        = Str::studly($this->container['slug']);
         $this->container['version']     = '1.0';
         $this->container['description'] = 'This is the description for the ' . $this->container['name'] . ' module.';
         $this->container['location']    = $location ?: config('modules.default_location');
         $this->container['provider']    = config("modules.locations.{$this->container['location']}.provider");
 
         if ($this->option('quick')) {
-            $this->container['basename']  = studly_case($this->container['slug']);
+            $this->container['basename']  = Str::studly($this->container['slug']);
             $this->container['namespace'] = config("modules.locations.{$this->container['location']}.namespace").$this->container['basename'];
 
             return $this->generate();
@@ -145,7 +146,7 @@ class MakeModuleCommand extends Command
         $this->container['slug']        = $this->ask('Please enter the slug for the module:', $this->container['slug']);
         $this->container['version']     = $this->ask('Please enter the module version:', $this->container['version']);
         $this->container['description'] = $this->ask('Please enter the description of the module:', $this->container['description']);
-        $this->container['basename']    = studly_case($this->container['slug']);
+        $this->container['basename']    = Str::studly($this->container['slug']);
         $this->container['namespace']   = config("modules.locations.{$this->container['location']}.namespace") . $this->container['basename'];
 
         $this->comment('You have provided the following manifest information:');

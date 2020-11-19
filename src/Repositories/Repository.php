@@ -6,6 +6,7 @@ use Exception;
 use Caffeinated\Modules\Contracts\Repository as RepositoryContract;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 
 abstract class Repository implements RepositoryContract
 {
@@ -122,7 +123,7 @@ abstract class Repository implements RepositoryContract
      */
     public function getModulePath($slug)
     {
-        $module = studly_case($slug);
+        $module = Str::studly($slug);
 
         if (file_exists($this->getPath()."/{$module}/")) {
             return $this->getPath()."/{$module}/";

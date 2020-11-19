@@ -35,28 +35,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        $this->mapWebRoutes();
-
         $this->mapApiRoutes();
 
         //
-    }
-
-    /**
-     * Define the "web" routes for the module.
-     *
-     * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
-     */
-    protected function mapWebRoutes()
-    {
-        Route::group([
-            'middleware' => 'web',
-            'namespace'  => $this->namespace,
-        ], function ($router) {
-            require module_path('DummySlug', 'RoutesMapping/web.php', 'DummyLocation');
-        });
     }
 
     /**
@@ -69,9 +50,9 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::group([
-            'middleware' => 'auth:api',
+            // 'middleware' => 'auth:api',
             'namespace'  => $this->namespace,
-            'prefix'     => 'api',
+            'prefix'     => 'api/DummySlug',
         ], function ($router) {
             require module_path('DummySlug', 'RoutesMapping/api.php', 'DummyLocation');
         });
