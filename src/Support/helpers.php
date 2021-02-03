@@ -51,7 +51,13 @@ if (!function_exists('module_path')) {
             throw new ModuleNotFoundException($slug);
         }
 
-        return $modulesPath . '/' . $module['basename'] . $filePath;
+        if( file_exists($modulesPath . '/' . $module['basename']) ) {
+            $modulesPath = $modulesPath . '/' . $module['basename'] . $filePath;
+        } else {
+            $modulesPath = $modulesPath . '/' . strtolower($module['basename']) . $filePath;
+        }
+        
+        return $modulesPath;
     }
 }
 
